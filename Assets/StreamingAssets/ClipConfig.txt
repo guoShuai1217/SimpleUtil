@@ -1,0 +1,6 @@
+5
+Yamboo - Discotheque|Audio/scene1/Yamboo - Discotheque
+李寒 - 六亲不认的步伐|Audio/scene1/李寒 - 六亲不认的步伐
+bgm|Audio/scene2/background/bgm
+eff|Audio/scene2/effect/eff
+bam|Audio/scene2/bam
