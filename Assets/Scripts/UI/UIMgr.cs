@@ -22,14 +22,14 @@ namespace guoShuai.UIHelper
 
         public static UIMgr Instance;
 
-
-        private Dictionary<string, Dictionary<string, UIBehaviour>> componentDic;
+        // key: Panel的名字 , value: 组件名 -> 组件的UIBehaviour脚本(exp: btnName -> btnName.gameObject)
+        private Dictionary<string, Dictionary<string, GameObject>> componentDic;
 
         private void Awake()
         {
             Instance = this;
 
-            componentDic = new Dictionary<string, Dictionary<string, UIBehaviour>>();
+            componentDic = new Dictionary<string, Dictionary<string, GameObject>>();
         }
 
 
@@ -39,7 +39,7 @@ namespace guoShuai.UIHelper
         /// <param name="panelName"></param>
         /// <param name="componentName"></param>
         /// <param name="component"></param>
-        public void RegistSelf(string panelName,string componentName, UIBehaviour component)
+        public void RegistSelf(string panelName,string componentName, GameObject component)
         {
 
             if (!componentDic.ContainsKey(panelName))
@@ -49,7 +49,7 @@ namespace guoShuai.UIHelper
                 //componentDic.Add(panelName, tmpDic);
                 //return;
 
-                 componentDic[panelName] = new Dictionary<string, UIBehaviour>();
+                 componentDic[panelName] = new Dictionary<string, GameObject>();
 
             }
 
@@ -73,7 +73,7 @@ namespace guoShuai.UIHelper
                 return null;
             }
 
-            UIBehaviour tmp = componentDic[panelName][componentName];
+            GameObject tmp = componentDic[panelName][componentName];
             return tmp.GetComponent<T>();
 
         }

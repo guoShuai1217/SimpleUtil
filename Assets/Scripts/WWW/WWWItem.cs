@@ -9,7 +9,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace guoShuai.WWWHelper { 
+namespace guoShuai.WWWHelper
+{ 
 /// <summary>
 /// 开始下载
 /// </summary>

@@ -28,6 +28,7 @@ namespace  guoShuai.AudioHelper
 
         // TextAsset audioTxt = Resources.Load<TextAsset>("AudioConfig.txt");
 
+       
         private Dictionary<string, AudioClip> clipDic;
 
         public AudioClipMgr()
@@ -101,7 +102,8 @@ namespace  guoShuai.AudioHelper
             string rootPath = Application.dataPath + "/Resources/Audio";
 
             DirectoryInfo rootInfo = new DirectoryInfo(rootPath);
-            
+
+            // key: AudioClip的名字, value: AudioClip在Resources目录下的路径
             Dictionary<string, string> tmpDic = new Dictionary<string, string>();
 
             EachDirectory(rootInfo, tmpDic);

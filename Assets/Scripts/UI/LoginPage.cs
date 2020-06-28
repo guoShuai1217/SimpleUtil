@@ -26,11 +26,12 @@ namespace guoShuai.UIHelper
 
         private InputField Ninput_Psd;
 
+        private UISubMgr subMgr;
       
         private void Start()
         {
             loginModel = new LoginModel();
-            loginLogic = new LoginLogic(this);
+            loginLogic = new LoginLogic(loginModel);
 
            
             Ninput_Account = GetGameObject<InputField>("Ninput_Account");
@@ -38,14 +39,18 @@ namespace guoShuai.UIHelper
 
             AddButtonListener("Nbtn_Login", loginLogic.OnClick);
 
-            AddInputFieldEndEditListener("Ninput_Account", loginLogic.OnEditAction);
-            AddInputFieldEndEditListener("Ninput_Psd", loginLogic.OnEditAction);
+            AddInputFieldEndEditListener("Ninput_Account", loginLogic.AccountEndEdit);
+            AddInputFieldEndEditListener("Ninput_Psd", loginLogic.PasswordEndEdit);
 
             SetText("Ntxt", "赋值text");
 
 
             OnEventHandler("Ntxt", EventTriggerType.Drag, DragCallback);
 
+
+            subMgr = GetGameObject<UISubMgr>("itemName");
+            subMgr.SetText("txt_C","laowang");
+             
         }
 
 
@@ -63,22 +68,41 @@ namespace guoShuai.UIHelper
     // Logic 类 , 处理逻辑
     public class LoginLogic
     {
-        private UIBase view;
-        public LoginLogic(UIBase tmp)
+        private LoginModel model;
+        public LoginLogic(LoginModel tmp)
         {
-            view = tmp;
+            model = tmp;
+        }
+ 
+        public void AccountEndEdit(string account)
+        {
+            if (string.IsNullOrEmpty(account))
+                return;
+
+            model.Account = account;
         }
 
-        public void OnEditAction(string arg0)
+        public void PasswordEndEdit(string psd)
         {
-            Debug.Log(arg0);
+            if (string.IsNullOrEmpty(psd))
+                return;
+
+            model.Password = psd;
         }
 
-        public void OnClick()
+        public void  OnClick()
         {
-            Debug.Log("Click LoginBtn");
-            
+            if (string.IsNullOrEmpty(model.Account))
+                return;
+            if (string.IsNullOrEmpty(model.Password))
+                return;
+
+            // 登陆请求
+
         }
+
+
+
     }
 
 

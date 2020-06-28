@@ -30,6 +30,10 @@ namespace guoShuai.UIHelper
                 {
                     tmp.gameObject.AddComponent<UIBehaviour>();
                 }
+                else if (tmp.name.StartsWith("item")) // Scroll View/Content 下面的item,都要以item开头,挂载UISubMgr
+                {
+                    tmp.gameObject.AddComponent<UISubMgr>();
+                }
             }
         }
 
@@ -72,7 +76,7 @@ namespace guoShuai.UIHelper
 
         #endregion
 
-        #region 下层API
+        #region UIBehaviour 下层API
 
         public void AddButtonListener(string componentName, UnityAction action)
         {
@@ -148,6 +152,107 @@ namespace guoShuai.UIHelper
 
 
         #endregion
+
+        #region UISubMgr 下层API
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemName">item的名字</param>
+        /// <param name="componentName">item里组件的名字</param>
+        /// <param name="action"></param>
+        public void AddButtonListener(string itemName, string componentName, UnityAction action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.AddButtonListener(componentName,action);
+        }
+
+        public void AddToggleListener(string itemName, string componentName, UnityAction<bool> action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.AddToggleListener(componentName, action);
+        }
+
+        public void AddInputFieldEndEditListener(string itemName,string componentName, UnityAction<string> action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.AddInputFieldEndEditListener(componentName,action);
+        }
+
+        public void AddInputFieldValueChangedListener(string itemName,string componentName, UnityAction<string> action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.AddInputFieldValueChangedListener(componentName,action);
+        }
+
+        public void AddSliderListener(string itemName,string componentName, UnityAction<float> action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.AddSliderListener(componentName,action);
+        }
+
+
+        public void SetText(string itemName,string componentName, string str)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.SetText(componentName,str);
+        }
+
+        public void SetImage(string itemName, string componentName, Sprite spr)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.SetImage(componentName,spr);
+        }
+
+
+        public void SetRawImage(string itemName, string componentName, Texture spr)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.SetRawImage(componentName,spr);
+        }
+
+
+        /// <summary>
+        /// 接口监听事件
+        /// </summary>
+        /// <param name="componentName">组件名字</param>
+        /// <param name="eventType">继承接口类型</param>
+        /// <param name="action">回调</param>
+        public void OnEventHandler(string itemName, string componentName, EventTriggerType eventType, UnityAction<BaseEventData> action)
+        {
+            UISubMgr tmp = GetGameObject<UISubMgr>(itemName);
+            if (tmp != null)
+                tmp.EventHandler(componentName,eventType, action);
+        }
+
+
+        #endregion
+
+
+        public GameObject PushDialog(string path)
+        {
+            GameObject obj = Resources.Load<GameObject>(path);
+            if(obj == null)
+            {
+                Debug.LogError("path is not exits : " + path);
+                return null;
+            }
+
+            GameObject panel = Instantiate(obj);
+            panel.name = panel.name.Replace("Clone", "");
+            panel.transform.SetParent(this.transform);
+
+            return panel;
+        }
+
 
 
         private void OnDestroy()

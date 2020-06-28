@@ -22,7 +22,7 @@ namespace guoShuai.UIHelper
         private void Awake()
         {
             UIBase tmpBase = transform.GetComponentInParent<UIBase>();
-            UIMgr.Instance.RegistSelf(tmpBase.name, transform.name, GetComponent<UIBehaviour>());
+            UIMgr.Instance.RegistSelf(tmpBase.name, transform.name, gameObject);
         }
 
 
@@ -91,6 +91,11 @@ namespace guoShuai.UIHelper
 
         #region 接口监听事件
 
+        /// <summary>
+        /// 添加接口监听事件
+        /// </summary>
+        /// <param name="eventType">接口类型</param>
+        /// <param name="action">回调函数</param>
         public void EventHandler(EventTriggerType eventType, UnityAction<BaseEventData> action)
         {
             // 获取事件系统
